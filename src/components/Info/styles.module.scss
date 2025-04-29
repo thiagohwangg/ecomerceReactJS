@@ -1,0 +1,36 @@
+@import '@styles/_variables.module.scss';
+@import '@styles/_mixins.module.scss';
+
+.container {
+    background-color: $primary_color;
+    margin-top: -75px;
+    padding: 20px 50px;
+    display: flex;
+
+    @include flex_box_custom(space-between, center, 0px);
+}
+
+.containerCart {
+    @include flex_box_custom(center, center, 18px);
+    
+    width: 280px;
+    height: 104px;
+}
+
+.containerContent {
+    @include flex_box_custom(center, flex-start, 13px);
+    
+    flex-direction: column;
+    color: $white_color;
+    font-weight: 400;
+
+    .title {
+        font-size: 17px;
+    }
+
+    .des {
+        font-size: 16px;
+        color: #ffffffC7;
+    }
+}
+
