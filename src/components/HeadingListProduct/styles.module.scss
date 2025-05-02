@@ -1,0 +1,12 @@
+@import '@styles/_mixins.module.scss';
+@import '@styles/_variables.module.scss';
+
+.container {
+    @include flex_box_custom(space-between, center, 10px);
+}
+
+.containerItem {
+    @include flex_box_custom(center, center, 10px);
+}
+
+
