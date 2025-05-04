@@ -6,6 +6,7 @@ import Info from '@components/Info/Info';
 import HeadingListProduct from '@components/HeadingListProduct/HeadingListProduct';
 import { getProducts } from '@/apis/productService';
 import PopularProduct from '@components/PopularProduct/PopularProduct';
+import SaleHomePage from '@components/SaleHomePage/SaleHomePage';
 
 
 export default function HomePage() {
@@ -26,6 +27,7 @@ export default function HomePage() {
                 <AdvanceHeading />
                 <HeadingListProduct data={listProduct.slice(0, 2)} />
                 <PopularProduct data={listProduct.slice(2, 10)} />
+                <SaleHomePage />
             </>
         </>
     );
