@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import BoxIcon from './BoxIcon/BoxIcon';
 import { dataBoxIcon, dataMenu } from './constants';
 import styles from './styles.module.scss';
@@ -9,6 +9,7 @@ import heartIcon from '@icons/svgs/hearticon.svg';
 import cartIcon from '@icons/svgs/carticon.svg';
 import useScrollHandling from '@/hooks/useScrollHandling';
 import classNames from 'classnames';
+import { SideBarContext } from '@/contexts/SideBarProvider';
 export default function MyHeader() {
     const {
         containerBoxIcon,
@@ -21,6 +22,9 @@ export default function MyHeader() {
     } = styles;
 const {scrollPosition} = useScrollHandling();
 const [fixedPosition, setFixedPosition] = useState(false);    
+
+const {isOpen, setIsOpen} = useContext(SideBarContext);
+console.log("isOpen: ", isOpen);
 
 useEffect(() => {
     setFixedPosition(scrollPosition > 80);
@@ -62,7 +66,7 @@ useEffect(() => {
                     <div className={containerMenu}>
                         {dataMenu.slice(3, dataMenu.length).map((item) => {
                             return (
-                                <Menu content={item.content} href={item.href} />
+                                <Menu content={item.content} href={item.href} setIsOpen={setIsOpen} />
                             );
                         })}
                     </div>
