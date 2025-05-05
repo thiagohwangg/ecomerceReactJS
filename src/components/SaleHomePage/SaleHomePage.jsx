@@ -1,11 +1,11 @@
 import React from 'react';
 import styles from './styles.module.scss';
 import Button from '@components/Button/Button';
-import useTranslateX from '@components/SaleHomePage/translateXImage';
+import useTranslateXImage from '@/hooks/useTranslateXImage';
 
 export default function SaleHomePage() {
     const { container, title, des, boxBtn, boxImage } = styles;
-    const {translateXPosition} = useTranslateX();
+    const {translateXPosition} = useTranslateXImage();
 
     return (
         <div className={container}>

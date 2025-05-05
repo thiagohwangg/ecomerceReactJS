@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import BoxIcon from './BoxIcon/BoxIcon';
 import { dataBoxIcon, dataMenu } from './constants';
 import styles from './styles.module.scss';
@@ -7,17 +7,30 @@ import Logo from '@icons/images/Logo-retina.webp';
 import reloadIcon from '@icons/svgs/reloadicon.svg';
 import heartIcon from '@icons/svgs/hearticon.svg';
 import cartIcon from '@icons/svgs/carticon.svg';
-
+import useScrollHandling from '@/hooks/useScrollHandling';
+import classNames from 'classnames';
 export default function MyHeader() {
     const {
         containerBoxIcon,
         containerMenu,
         containerHeader,
         containerBox,
-        container
+        container,
+        fixedHeader,
+        topHeader
     } = styles;
+const {scrollPosition} = useScrollHandling();
+const [fixedPosition, setFixedPosition] = useState(false);    
+
+useEffect(() => {
+    setFixedPosition(scrollPosition > 80);
+
+}, [scrollPosition])
+
     return (
-        <div className={container}>
+        <div className={classNames(container, topHeader, {
+            [fixedHeader]: fixedPosition
+        })}>
             <div className={containerHeader}>
                 <div className={containerBox}>
                     <div className={containerBoxIcon}>
