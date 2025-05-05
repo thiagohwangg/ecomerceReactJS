@@ -7,6 +7,7 @@ import HeadingListProduct from '@components/HeadingListProduct/HeadingListProduc
 import { getProducts } from '@/apis/productService';
 import PopularProduct from '@components/PopularProduct/PopularProduct';
 import SaleHomePage from '@components/SaleHomePage/SaleHomePage';
+import MyFooter from '@components/Footer/Footer';
 
 
 export default function HomePage() {
@@ -28,6 +29,7 @@ export default function HomePage() {
                 <HeadingListProduct data={listProduct.slice(0, 2)} />
                 <PopularProduct data={listProduct.slice(2, 10)} />
                 <SaleHomePage />
+                <MyFooter />
             </>
         </>
     );
