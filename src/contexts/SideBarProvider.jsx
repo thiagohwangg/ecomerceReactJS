@@ -5,5 +5,6 @@ export const SideBarContext = createContext();
 
 export const SideBarProvider = ({ children }) => {
     const [isOpen, setIsOpen] = useState(false);
-    return <SideBarContext.Provider value={{isOpen, setIsOpen}}>{children}</SideBarContext.Provider>;
+    const [type, setType] = useState('');
+    return <SideBarContext.Provider value={{isOpen, setIsOpen, type, setType}}>{children}</SideBarContext.Provider>;
 };
