@@ -1,0 +1,23 @@
+@import '@styles/_mixins.module.scss';
+
+.container {
+    @include flex_box_custom(space-between, unset, 0px);
+    flex-direction: column;
+    padding: 20px 20px 0 20px;
+    height: 95vh;
+
+    .total {
+        @include flex_box_custom(space-between, center, 0px);
+    }
+
+    .boxBtn {
+        @include flex_box_custom(unset, unset, 10px);
+        flex-direction: column;
+    }
+}
+
+button {
+    min-width: 100%;
+}
+
+

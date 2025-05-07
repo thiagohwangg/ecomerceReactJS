@@ -1,14 +1,16 @@
 import styles from './styles.module.scss'
 import classNames from  'classnames';
 
-export default function Button({content, isPrimary = true}) {
+export default function Button({content, isPrimary = true, ...props}) {
   const {btn, primaryBtn, secondaryBtn} = styles;
   return (
     <div>
         <button className={classNames(btn, {
           [primaryBtn]: isPrimary,
           [secondaryBtn]: !isPrimary
-        })}>{content}</button> 
+        })}
+        {...props}
+        >{content}</button> 
     </div>
   )
 }
