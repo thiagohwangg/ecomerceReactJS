@@ -6,14 +6,18 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { ToastContext } from '@/contexts/ToastProvider';
 import { register } from '@/apis/authService';
-import { signIn, getInfo } from '@/apis/authService';
+import { signIn } from '@/apis/authService';
 import Cookies from 'js-cookie';
+import { SideBarContext } from '@/contexts/SideBarProvider';
+import { StoreContext } from '@/contexts/storeProdiver';
 
 export default function Login() {
     const { container, title, boxRememberMe, lostPw } = styles;
     const [isRegister, setIsRegister] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const { toast } = useContext(ToastContext);
+    const {setIsOpen} = useContext(SideBarContext);
+    const {setUserId} = useContext(StoreContext);
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -57,10 +61,15 @@ export default function Login() {
                     password
                 }).then(res => {
                     setIsLoading(false)
+                    setIsOpen(false)
                     const {id, token, refreshToken} = res.data
+                    setUserId(id)
                     Cookies.set('token', token)
                     Cookies.set('refreshToken', refreshToken)
+                    Cookies.set('userId', id)
+                    toast.success("Sign in success")
                 }).catch(err => {
+                    toast.success("Sign in failed")
                     setIsLoading(false)
                 })
             }
@@ -71,12 +80,6 @@ export default function Login() {
         setIsRegister(!isRegister);
         formik.resetForm();
     };
-
-    useEffect(() => {
-        getInfo().then(res => {
-            console.log(res)
-        })
-    }, [])
 
     return (
         <div className={container}>
