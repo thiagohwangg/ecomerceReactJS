@@ -3,6 +3,7 @@ import styles from '../styles.module.scss';
 import { SideBarContext } from '@/contexts/SideBarProvider';
 import { StoreContext } from '@/contexts/storeProdiver';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 function Menu({ content, href }) {
     const { menu, subMenu } = styles;
@@ -14,6 +15,8 @@ function Menu({ content, href }) {
         if (content === 'Sign in' && !userInfo) {
             setType('login');
             setIsOpen(true);
+
+            return;
         }
 
         if(content === 'Our Shop') {
