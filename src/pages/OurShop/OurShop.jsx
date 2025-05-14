@@ -3,11 +3,11 @@ import MainLayout from '@components/Layout/Layout';
 import React from 'react';
 import styles from './styles.module.scss';
 import { useNavigate } from 'react-router-dom';
-import Banner from '@pages/components/Banner';
 import { OurShopProvider } from '@/contexts/OurShopProvider';
-import Filter from '@/pages/components/Filter';
-import ListProduct from '@/pages/components/ListProduct';
 import MyFooter from '@components/Footer/Footer';
+import Banner from '@/pages/OurShop/components/Banner';
+import ListProduct from '@/pages/OurShop/components/ListProduct';
+import Filter from '@/pages/OurShop/components/Filter';
 
 export default function OurShop() {
     const { container,functionBox,specialText,btnBack } = styles;

@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
-import styles from '../OurShop/styles.module.scss';
+import styles from '../styles.module.scss';
 import CountdownTimer from '@components/CountdownTimer/CountdownTimer';
 import Button from '@components/Button/Button';
-import { OurShopContext } from '@/contexts/OurShopProvider';
 
 export default function Banner() {
     const { containerBanner,contentBox,title,boxBtn,countDownBox } = styles;

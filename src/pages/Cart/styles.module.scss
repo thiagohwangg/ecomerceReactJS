@@ -155,6 +155,8 @@
                 }
             }
         }
+
+        
     }
 
     .containerRight {
@@ -164,6 +166,7 @@
     .containerSummary {
         padding: 25px;
         border: 2px solid #333;
+        position: relative;
 
         .title {
             font-size: 14px;
@@ -238,4 +241,69 @@
         color: $third_color;
         margin-top: 10px;
     }
+
+    .boxFooter {
+        @include flex_box_custom(space-between, center, 0px);
+
+        margin-top: 15px;
+        .boxCoupon {
+            @include flex_box_custom(flex-start, center, 0px);
+
+            input {
+                border: 1px solid #e1e1e1;
+                padding: 8px 15px;
+                width: 300px;
+                outline: none;
+            }
+
+            button {
+                height: 36px;
+                border-radius: 0px;
+                padding: 0 10px;
+                font-size: 12px;
+                width: 36px;
+            }
+        }
+
+        .boxBtnDelete {
+            font-size: 12px;
+            padding: 0 30px;
+
+            button {
+                height: 36px !important;
+            }
+        }
+    }
 }
+
+.boxEmptyCart {
+    @include flex_box_custom(center, center, 20px);
+
+    width: 100%;
+
+    flex-direction: column;
+    font-size: 14px;
+    color: $third_color;
+
+    .titleEmpty {
+        font-size: 24px;
+        color: $primary_color;
+    }
+
+    .boxBtnEmpty {
+        button {
+            padding: 0 20px;
+        }
+    }
+}
+
+.loadingCart {
+            @include flex_box_custom(center, center, 0px);
+
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.8);
+        }

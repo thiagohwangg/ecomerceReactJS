@@ -17,6 +17,13 @@ const deleteItem = async(body) => {
     return res.data
 }
 
+const deleteCart = async(body) => {
+    const res = await axiosClient.delete('/cart/delete', {
+        data: body
+    });
+    return res.data
+}
+
 export {
-    addProductToCart,getCart,deleteItem
+    addProductToCart,getCart,deleteItem, deleteCart
 }

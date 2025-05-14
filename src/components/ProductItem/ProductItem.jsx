@@ -1,8 +1,5 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styles from './styles.module.scss';
-import reloadIcon from '@icons/svgs/reloadicon.svg';
-import heartIcon from '@icons/svgs/hearticon.svg';
-import cartIcon from '@icons/svgs/carticon.svg';
 import classNames from 'classnames';
 import Button from '@components/Button/Button';
 import { OurShopContext } from '@/contexts/OurShopProvider';
@@ -11,7 +8,10 @@ import { SideBarContext } from '@/contexts/SideBarProvider';
 import { ToastContext } from '@/contexts/ToastProvider';
 import { addProductToCart } from '@/apis/cartService';
 import LoadingTextCommon from '@components/LoadingTextCommon/LoadingTextCommon';
-
+import { LiaShoppingBagSolid } from "react-icons/lia";
+import { CiHeart } from "react-icons/ci";
+import { LiaEyeSolid } from "react-icons/lia";
+import { TfiReload } from 'react-icons/tfi';
 export default function ProductItem({
     src,
     prevSrc,
@@ -20,10 +20,11 @@ export default function ProductItem({
     details,
     isHomePage = true
 }) {
-    const {isShowGrid} = useContext(OurShopContext);
+    const ourShopStore = useContext(OurShopContext);
+    const [isShowGrid, setIsShowGrid] = useState(ourShopStore?.isShowGrid);
     const [sizeChoose, setSizeChoose] = useState('');
     const userId = Cookies.get('userId');
-    const {setIsOpen, setType, handleGetListProductCart} = useContext(SideBarContext);
+    const {setIsOpen, setType, handleGetListProductCart, setDetailProduct} = useContext(SideBarContext);
     const {toast} = useContext(ToastContext);
     const [isLoading, setIsLoading] = useState(false);
     const {
@@ -87,26 +88,40 @@ export default function ProductItem({
         });
     }
 
+    const handleShowDetailProductSideBar = () => {
+        setIsOpen(true);
+        setType('detail')
+        setDetailProduct(details);
+    }
+
+    useEffect(() => {
+        if(isHomePage) {
+            setIsShowGrid(true);
+        } else {
+            setIsShowGrid(ourShopStore?.isShowGrid);
+        }
+    }, [isHomePage, ourShopStore?.isShowGrid]);
+
     return (
         <div className={isShowGrid ? '' : containerItem}>
             <div className={classNames(boxImg, {
                 [largeImg]: !isShowGrid
             })}>
                 <img src={src} alt='' />
-                <img className={showImgWhenHover} src={prevSrc} alt='' />
+                <img className={showImgWhenHover} src={LiaShoppingBagSolid} alt='' />
 
                 <div className={showFncWhenHover}>
                     <div className={boxIcon}>
-                        <img src={cartIcon} alt='' />
+                        <LiaShoppingBagSolid style={{ fontSize: '20px' }} />
                     </div>
                     <div className={boxIcon}>
-                        <img src={heartIcon} alt='' />
+                        <CiHeart style={{ fontSize: '25px' }} />
                     </div>
                     <div className={boxIcon}>
-                        <img src={reloadIcon} alt='' />
+                        <TfiReload style={{ fontSize: '20px' }} />
                     </div>
-                    <div className={boxIcon}>
-                        <img src={reloadIcon} alt='' />
+                    <div className={boxIcon} onClick={handleShowDetailProductSideBar}>
+                        <LiaEyeSolid style={{ fontSize: '23px' }} />
                     </div>
                 </div>
             </div>

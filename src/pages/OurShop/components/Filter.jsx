@@ -1,10 +1,9 @@
 import React, { useContext } from 'react';
 import { TfiLayoutGrid4 } from 'react-icons/tfi';
 import { CiCircleList } from 'react-icons/ci';
-import styles from '../OurShop/styles.module.scss';
-import classNames from 'classnames';
+import styles from '../styles.module.scss';
 import { OurShopContext } from '@/contexts/OurShopProvider';
-import SelectBox from '@/pages/components/SelectBox';
+import SelectBox from '@/pages/OurShop/components/SelectBox';
 
 export default function Filter() {
     const {containerFilter, boxIcon, boxLeft,selectBox, boxRight, show, sort} = styles;

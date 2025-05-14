@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from '../../styles.module.scss';
-// import SelectBox from '@/pages/OurShop/components/SelectBox';
-// import LoadingCart from '@/pages/Cart/components/Loading';
+import SelectBox from '@/pages/OurShop/components/SelectBox';
+import LoadingCart from '@/pages/Cart/components/Loading';
 
 const CartTable = ({ listProductCart, getData, isLoading, getDataDelete }) => {
     const { cartTable } = styles;
@@ -45,7 +45,7 @@ const CartTable = ({ listProductCart, getData, isLoading, getDataDelete }) => {
                         <th>SUBTOTAL</th>
                     </tr>
                 </thead>
-                {/* <tbody>
+                <tbody>
                     {listProductCart.map((item) => (
                         <tr key={item.id}>
                             <td className={styles.product}>
@@ -90,10 +90,10 @@ const CartTable = ({ listProductCart, getData, isLoading, getDataDelete }) => {
                             <td>${(item.price * item.quantity).toFixed(2)}</td>
                         </tr>
                     ))}
-                </tbody> */}
+                </tbody>
             </table>
 
-            {/* {isLoading && <LoadingCart />} */}
+            {isLoading && <LoadingCart />}
         </div>
     );
 };

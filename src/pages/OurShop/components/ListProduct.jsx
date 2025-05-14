@@ -2,7 +2,7 @@ import MainLayout from '@components/Layout/Layout';
 import React, { useContext } from 'react';
 import { OurShopContext } from '@/contexts/OurShopProvider';
 import ProductItem from '@components/ProductItem/ProductItem';
-import styles from '../OurShop/styles.module.scss';
+import styles from '../styles.module.scss';
 import Button from '@components/Button/Button';
 import LoadingTextCommon from '@components/LoadingTextCommon/LoadingTextCommon';
 
