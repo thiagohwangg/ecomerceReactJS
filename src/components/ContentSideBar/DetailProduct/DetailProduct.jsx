@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { SideBarContext } from '@/contexts/SideBarProvider';
 import styles from './styles.module.scss';
 import SliderCommon from '@components/SliderCommon/SliderCommon';
@@ -9,6 +9,8 @@ import { TfiReload } from 'react-icons/tfi';
 import { CiHeart } from 'react-icons/ci';
 import { FaXTwitter } from "react-icons/fa6";
 import { FaFacebookF } from "react-icons/fa";
+import cls from 'classnames';
+import { addProductToCart } from '@/apis/cartService';
 
 export default function DetailProduct() {
     const {
@@ -24,10 +26,12 @@ export default function DetailProduct() {
         line,
         or,
         boxAddOther,
-        boxFooter
+        boxFooter,
+        isActive,
     } = styles;
-    const { detailProduct } = useContext(SideBarContext);
-
+    const { detailProduct, userId, setType, handleGetListProductCart, setIsLoading, setIsOpen } = useContext(SideBarContext);
+    const [chooseSize, setChooseSize] = useState('');
+    const [quantity, setQuantity] = useState(1);
     const showOptions = [
         { label: '1', value: '1' },
         { label: '2', value: '2' },
@@ -38,6 +42,38 @@ export default function DetailProduct() {
         { label: '7', value: '7' }
     ];
 
+    const handleGetSize = (value) => {
+        setChooseSize(value);
+    }
+
+    const handleCLearSize = () => {
+        setChooseSize('');
+    }
+
+    const handleGetQuantity = (value) => {
+        setQuantity(value);
+    }
+
+    const handleAddToCart = () => {
+        const data = {
+            userId,
+            productId: detailProduct._id,
+            quantity,
+            size: chooseSize,
+            isMultiple: true,
+        }
+        setIsOpen(false);
+        setIsLoading(true);
+        addProductToCart(data).then((res) => {
+            setIsOpen(true);
+            setType('cart');
+            handleGetListProductCart(userId, 'cart');
+
+        }).catch((err) => {
+            console.error(err);
+        })
+    }
+
     return (
         <div className={container}>
             <SliderCommon data={detailProduct.images} />
@@ -45,22 +81,27 @@ export default function DetailProduct() {
             <div className={price}>{detailProduct.price}</div>
             <div className={des}>{detailProduct.description}</div>
 
-            <div className={label}>Size</div>
+            <div className={label}>Size {chooseSize}</div>
             <div className={boxSize}>
                 {detailProduct.size.map((item, index) => {
                     return (
-                        <div key={index} className={size}>
+                        <div onClick={() => handleGetSize(item.name)} key={index} className={cls(size, {
+                            [isActive]: chooseSize === item.name
+                        })}>
                             {item.name}
                         </div>
                     );
                 })}
             </div>
+            {chooseSize && (
+                <div onClick={handleCLearSize} style={{fontSize: '12px', marginTop: '3px', cursor: 'pointer'}}>Clear</div>
+            )}
 
             <div className={boxAddToCart}>
-                <SelectBox options={showOptions} />
+                <SelectBox getValue={handleGetQuantity} defaultValue={quantity} options={showOptions} />
 
                 <div>
-                    <Button
+                    <Button onClick={handleAddToCart}
                         content={
                             <div>
                                 <PiShoppingCartThin /> ADD TO CART
