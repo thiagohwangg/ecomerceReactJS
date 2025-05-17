@@ -110,8 +110,10 @@ export default function ProductItem({
     }, [isHomePage, ourShopStore?.isShowGrid]);
 
     return (
-        <div onClick={handleNavigateToDetail} className={isShowGrid ? '' : containerItem} style={{cursor: 'pointer'}}>
-            <div className={classNames(boxImg, {
+        <div className={isShowGrid ? '' : containerItem} style={{cursor: 'pointer'}}>
+            <div
+             onClick={handleNavigateToDetail}
+             className={classNames(boxImg, {
                 [largeImg]: !isShowGrid
             })}>
                 <img src={src} alt='' />

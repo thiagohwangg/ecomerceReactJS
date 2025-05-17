@@ -3,6 +3,9 @@ import MainLayout from '@components/Layout/Layout';
 import React from 'react';
 import styles from './styles.module.scss';
 import Button from '@components/Button/Button';
+import { CiHeart } from 'react-icons/ci';
+import { TfiReload } from 'react-icons/tfi';
+import PaymentMethods from '@components/PaymentMethods/PaymentMethods';
 
 export default function DetailProduct() {
     const {
@@ -19,7 +22,9 @@ export default function DetailProduct() {
         functionInfo,
         boxBtn,
         incrementAmount,
-        orSection
+        orSection,
+        addFunc,
+        info
     } = styles;
     return (
         <div>
@@ -80,6 +85,30 @@ export default function DetailProduct() {
                                 <div></div>
                                 <span>OR</span>
                                 <div></div>
+                            </div>
+
+                            <div>
+                                <Button content={'BUY NOW'} />
+                            </div>
+
+                            <div className={addFunc}>
+                                <div>
+                                    <CiHeart />
+                                </div>
+
+                                <div>
+                                    <TfiReload />
+                                </div>
+                            </div>
+
+                            <div>
+                                <PaymentMethods />
+                            </div>
+
+                            <div className={info}>
+                                <div>Brand: <span>Brand 03</span></div>
+                                <div>SKU: <span>1234</span></div>
+                                <div>Category: <span>Men</span></div>
                             </div>
                         </div>
                     </div>

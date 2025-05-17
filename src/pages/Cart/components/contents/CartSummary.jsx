@@ -4,16 +4,9 @@ import Button from '@components/Button/Button';
 import cls from 'classnames'
 import { SideBarContext } from '@/contexts/SideBarProvider';
 import LoadingCart from '@/pages/Cart/components/Loading';
+import PaymentMethods from '@components/PaymentMethods/PaymentMethods';
 
 export default function CartSummary() {
-  const srcMethods = [
-    'https://xstore.8theme.com/elementor2/marseille04/wp-content/themes/xstore/images/woocommerce/payment-icons/visa.jpeg',
-    "https://xstore.8theme.com/elementor2/marseille04/wp-content/themes/xstore/images/woocommerce/payment-icons/master-card.jpeg",
-    "https://xstore.8theme.com/elementor2/marseille04/wp-content/themes/xstore/images/woocommerce/payment-icons/paypal.jpeg",
-    "https://xstore.8theme.com/elementor2/marseille04/wp-content/themes/xstore/images/woocommerce/payment-icons/american-express.jpeg",
-    "https://xstore.8theme.com/elementor2/marseille04/wp-content/themes/xstore/images/woocommerce/payment-icons/maestro.jpeg",
-    "https://xstore.8theme.com/elementor2/marseille04/wp-content/themes/xstore/images/woocommerce/payment-icons/bitcoin.jpeg"
-  ]
     const {
         containerSummary,
         title,
@@ -22,11 +15,7 @@ export default function CartSummary() {
         subTotal,
         totals,
         space,
-        containerMethods,
-        titleMethods,
         containerRight,
-        boxImgMethods,
-        imgMethods,textSecure
     } = styles;
 
     const {listProductCart, isLoading} = useContext(SideBarContext);
@@ -53,25 +42,7 @@ export default function CartSummary() {
             
               {isLoading && <LoadingCart />}
             </div>
-            <div className={containerMethods}>
-                <div className={titleMethods}>
-                    Guaranteed <span>safe</span> checkout
-                </div>
-
-                <div className={boxImgMethods}>
-                  {srcMethods.map((src, index) => {
-                    return (
-                      <img
-                        key={index}
-                        src={src}
-                        alt=''
-                        className={imgMethods}
-                      />
-                    )
-                  })}
-                </div>
-            </div>
-            <div className={textSecure}>Your payment is 100% Secure</div>
+            <PaymentMethods />
         </div>
     );
 }

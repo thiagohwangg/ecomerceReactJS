@@ -12,7 +12,7 @@
         padding: 10px 0;
     }
     .contentSection {
-        @include flex_box_custom(unset, flex-start, 0px);
+        @include flex_box_custom(unset, flex-start, 20px);
 
         .imageBox {
             max-width: 610px;
@@ -83,12 +83,11 @@
                 .incrementAmount {
                     @include flex_box_custom(center, center, 0px);
 
-
                     div {
-                    border: 1px solid #e1e1e1;
-                    padding: 8px 5px;
-                    color: $secondary_color;
-                    cursor: pointer;
+                        border: 1px solid #e1e1e1;
+                        padding: 8px 5px;
+                        color: $secondary_color;
+                        cursor: pointer;
                     }
 
                     div:nth-child(2) {
@@ -100,19 +99,59 @@
             }
 
             .orSection {
-                    @include flex_box_custom(center, center, 0px);
-                    
-                    margin: 20px 0;
-                    div {
-                        width: 100%;
-                        height: 1px;
-                        background-color: #e1e1e1;
-                    }
+                @include flex_box_custom(center, center, 0px);
 
-                    span {
-                        padding: 0 10px;
+                margin: 20px 0;
+                div {
+                    width: 100%;
+                    height: 1px;
+                    background-color: #e1e1e1;
+                }
+
+                span {
+                    padding: 0 10px;
+                    font-size: 12px;
+                    color: $four_color;
+                }
+            }
+
+            .addFunc {
+                @include flex_box_custom(unset, center, 10px);
+
+                margin: 30px 0;
+
+                div {
+                    @include flex_box_custom(center, center, 0px);
+
+                    border: 1px solid #e1e1e1;
+                    border-radius: 50%;
+                    padding: 10px;
+                    cursor: pointer;
+
+                    svg {
+                        font-size: 30px;
                     }
                 }
+
+                div:last-child {
+                    padding: 13px;
+                    svg {
+                        font-size: 25px;
+                    }
+                }
+            }
+
+            .info {
+                @include flex_box_custom(unset, flex-start, 10px);
+
+                flex-direction: column;
+                margin: 20px 0;
+                color: $four_color;
+
+                span {
+                    color: $secondary_color;
+                }
+            }
         }
     }
 }
