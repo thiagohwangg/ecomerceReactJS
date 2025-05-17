@@ -1,11 +1,12 @@
 import MyHeader from '@components/Header/Header';
 import MainLayout from '@components/Layout/Layout';
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './styles.module.scss';
 import Button from '@components/Button/Button';
 import { CiHeart } from 'react-icons/ci';
 import { TfiReload } from 'react-icons/tfi';
 import PaymentMethods from '@components/PaymentMethods/PaymentMethods';
+import AccordionMenu from '@components/AccordionMenu';
 
 export default function DetailProduct() {
     const {
@@ -26,6 +27,24 @@ export default function DetailProduct() {
         addFunc,
         info
     } = styles;
+    const [menuSelected, setMenuSelected] = useState(1); 
+
+    const dataAccordionMenu = [
+        {
+            id: 1,
+            titleMenu: 'ADDITIONAL INFORMATION',
+            contentJxs: <div>Content ADDITIONAL INFORMATION</div>
+        },
+        {
+            id: 2,
+            titleMenu: 'REVIEW (0)',
+            contentJxs: <div>Content review</div>
+        }
+    ];
+
+    const handleSetMenuSelected = (id) => {
+        setMenuSelected(id);
+    };
     return (
         <div>
             <MyHeader />
@@ -106,10 +125,28 @@ export default function DetailProduct() {
                             </div>
 
                             <div className={info}>
-                                <div>Brand: <span>Brand 03</span></div>
-                                <div>SKU: <span>1234</span></div>
-                                <div>Category: <span>Men</span></div>
+                                <div>
+                                    Brand: <span>Brand 03</span>
+                                </div>
+                                <div>
+                                    SKU: <span>1234</span>
+                                </div>
+                                <div>
+                                    Category: <span>Men</span>
+                                </div>
                             </div>
+
+                            {dataAccordionMenu.map((item, index) => (
+                                <AccordionMenu
+                                    key={index}
+                                    titleMenu={item.titleMenu}
+                                    contentJxs={item.contentJxs}
+                                    onClick={() =>
+                                        handleSetMenuSelected(item.id)
+                                    }
+                                    isSelected={menuSelected === item.id}
+                                />
+                            ))}
                         </div>
                     </div>
                 </MainLayout>

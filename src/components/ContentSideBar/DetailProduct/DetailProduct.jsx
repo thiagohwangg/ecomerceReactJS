@@ -7,8 +7,8 @@ import Button from '@components/Button/Button';
 import { PiShoppingCartThin } from 'react-icons/pi';
 import { TfiReload } from 'react-icons/tfi';
 import { CiHeart } from 'react-icons/ci';
-import { FaXTwitter } from "react-icons/fa6";
-import { FaFacebookF } from "react-icons/fa";
+import { FaXTwitter } from 'react-icons/fa6';
+import { FaFacebookF } from 'react-icons/fa';
 import cls from 'classnames';
 import { addProductToCart } from '@/apis/cartService';
 
@@ -27,9 +27,16 @@ export default function DetailProduct() {
         or,
         boxAddOther,
         boxFooter,
-        isActive,
+        isActive
     } = styles;
-    const { detailProduct, userId, setType, handleGetListProductCart, setIsLoading, setIsOpen } = useContext(SideBarContext);
+    const {
+        detailProduct,
+        userId,
+        setType,
+        handleGetListProductCart,
+        setIsLoading,
+        setIsOpen
+    } = useContext(SideBarContext);
     const [chooseSize, setChooseSize] = useState('');
     const [quantity, setQuantity] = useState(1);
     const showOptions = [
@@ -44,15 +51,15 @@ export default function DetailProduct() {
 
     const handleGetSize = (value) => {
         setChooseSize(value);
-    }
+    };
 
     const handleCLearSize = () => {
         setChooseSize('');
-    }
+    };
 
     const handleGetQuantity = (value) => {
         setQuantity(value);
-    }
+    };
 
     const handleAddToCart = () => {
         const data = {
@@ -60,19 +67,20 @@ export default function DetailProduct() {
             productId: detailProduct._id,
             quantity,
             size: chooseSize,
-            isMultiple: true,
-        }
+            isMultiple: true
+        };
         setIsOpen(false);
         setIsLoading(true);
-        addProductToCart(data).then((res) => {
-            setIsOpen(true);
-            setType('cart');
-            handleGetListProductCart(userId, 'cart');
-
-        }).catch((err) => {
-            console.error(err);
-        })
-    }
+        addProductToCart(data)
+            .then((res) => {
+                setIsOpen(true);
+                setType('cart');
+                handleGetListProductCart(userId, 'cart');
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    };
 
     return (
         <div className={container}>
@@ -85,23 +93,41 @@ export default function DetailProduct() {
             <div className={boxSize}>
                 {detailProduct.size.map((item, index) => {
                     return (
-                        <div onClick={() => handleGetSize(item.name)} key={index} className={cls(size, {
-                            [isActive]: chooseSize === item.name
-                        })}>
+                        <div
+                            onClick={() => handleGetSize(item.name)}
+                            key={index}
+                            className={cls(size, {
+                                [isActive]: chooseSize === item.name
+                            })}
+                        >
                             {item.name}
                         </div>
                     );
                 })}
             </div>
             {chooseSize && (
-                <div onClick={handleCLearSize} style={{fontSize: '12px', marginTop: '3px', cursor: 'pointer'}}>Clear</div>
+                <div
+                    onClick={handleCLearSize}
+                    style={{
+                        fontSize: '12px',
+                        marginTop: '3px',
+                        cursor: 'pointer'
+                    }}
+                >
+                    Clear
+                </div>
             )}
 
             <div className={boxAddToCart}>
-                <SelectBox getValue={handleGetQuantity} defaultValue={quantity} options={showOptions} />
+                <SelectBox
+                    getValue={handleGetQuantity}
+                    defaultValue={quantity}
+                    options={showOptions}
+                />
 
                 <div>
-                    <Button onClick={handleAddToCart}
+                    <Button
+                        onClick={handleAddToCart}
                         content={
                             <div>
                                 <PiShoppingCartThin /> ADD TO CART
@@ -126,25 +152,29 @@ export default function DetailProduct() {
             />
 
             <div className={boxAddOther}>
-              <TfiReload style={{ fontSize: '23px' }} />
-              <div>Add to compare</div>
+                <TfiReload style={{ fontSize: '23px' }} />
+                <div>Add to compare</div>
             </div>
             <div className={boxAddOther}>
-              <CiHeart style={{ fontSize: '25px' }} />
-              <div>Add to whishList</div>
+                <CiHeart style={{ fontSize: '25px' }} />
+                <div>Add to whishList</div>
             </div>
 
             <div className={boxFooter}>
-              SKU: <span>12345</span>
+                SKU: <span>12345</span>
             </div>
             <div className={boxFooter}>
-              Category: <span>Pull</span>
+                Category: <span>Pull</span>
             </div>
             <div className={boxFooter}>
-              Estimated delivery: <span>3 - 5 days</span>
+                Estimated delivery: <span>3 - 5 days</span>
             </div>
             <div className={boxFooter}>
-              Share: <span><FaXTwitter style={{fontSize: '20px'}} /> <FaFacebookF style={{fontSize: '20px'}} /></span>
+                Share:{' '}
+                <span>
+                    <FaXTwitter style={{ fontSize: '20px' }} />{' '}
+                    <FaFacebookF style={{ fontSize: '20px' }} />
+                </span>
             </div>
         </div>
     );
