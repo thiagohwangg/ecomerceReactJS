@@ -7,6 +7,10 @@ import { CiHeart } from 'react-icons/ci';
 import { TfiReload } from 'react-icons/tfi';
 import PaymentMethods from '@components/PaymentMethods/PaymentMethods';
 import AccordionMenu from '@components/AccordionMenu';
+import Information from '@/pages/DetailProduct/components/Information';
+import Review from '@/pages/DetailProduct/components/Review';
+import MyFooter from '@components/Footer/Footer';
+import SliderCommon from '@components/SliderCommon/SliderCommon';
 
 export default function DetailProduct() {
     const {
@@ -27,24 +31,45 @@ export default function DetailProduct() {
         addFunc,
         info
     } = styles;
-    const [menuSelected, setMenuSelected] = useState(1); 
+    const [menuSelected, setMenuSelected] = useState(1);
 
     const dataAccordionMenu = [
         {
             id: 1,
             titleMenu: 'ADDITIONAL INFORMATION',
-            contentJxs: <div>Content ADDITIONAL INFORMATION</div>
+            contentJxs: <Information />
         },
         {
             id: 2,
             titleMenu: 'REVIEW (0)',
-            contentJxs: <div>Content review</div>
+            contentJxs: <Review />
         }
     ];
 
     const handleSetMenuSelected = (id) => {
         setMenuSelected(id);
     };
+
+    const tempDateSlider = [
+        {
+            image: 'https://xstore.8theme.com/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-1.1-min.jpg',
+            name: 'Test product 1',
+            price: '100',
+            size: [{name: "L"}, {name: "M"}, {name: "S"}]
+        },
+        {
+            image: 'https://xstore.8theme.com/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-1.1-min.jpg',
+            name: 'Test product 1',
+            price: '100',
+            size: [{name: "L"}, {name: "M"}, {name: "S"}]
+        },
+        {
+            image: 'https://xstore.8theme.com/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-1.1-min.jpg',
+            name: 'Test product 1',
+            price: '100',
+            size: [{name: "L"}, {name: "M"}, {name: "S"}]
+        }
+    ]
     return (
         <div>
             <MyHeader />
@@ -149,8 +174,13 @@ export default function DetailProduct() {
                             ))}
                         </div>
                     </div>
+                    <div>
+                        <h2>Related products</h2>
+                        <SliderCommon data={tempDateSlider} isProductItem showItem={4} />
+                    </div>
                 </MainLayout>
             </div>
+            <MyFooter />
         </div>
     );
 }
