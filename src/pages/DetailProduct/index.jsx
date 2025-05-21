@@ -11,7 +11,16 @@ import Information from '@/pages/DetailProduct/components/Information';
 import Review from '@/pages/DetailProduct/components/Review';
 import MyFooter from '@components/Footer/Footer';
 import SliderCommon from '@components/SliderCommon/SliderCommon';
+import ReactImageMagnifier from 'simple-image-magnifier/react';
+import cls from 'classnames'
+const tempDateSize = [
+    {name: 'L', amount: '1000'},
+    {name: 'M', amount: '1000'},
+    {name: 'S', amount: '1000'},
+]
 
+const INCREMENT = 'increment';
+const DECREMENT = 'decrement';
 export default function DetailProduct() {
     const {
         container,
@@ -29,9 +38,14 @@ export default function DetailProduct() {
         incrementAmount,
         orSection,
         addFunc,
-        info
+        info,
+        active,
+        clear,
+        activeDisabledBtn
     } = styles;
     const [menuSelected, setMenuSelected] = useState(1);
+    const [sizeSelected, setSizeSelected] = useState('');
+    const [quantity, setQuantity] = useState(1);
 
     const dataAccordionMenu = [
         {
@@ -46,6 +60,28 @@ export default function DetailProduct() {
         }
     ];
 
+    const dateImageDetail = [
+        'https://xstore.8theme.com/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-1.1-min.jpg',
+        'https://xstore.8theme.com/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-1.1-min.jpg',
+        'https://xstore.8theme.com/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-1.1-min.jpg',
+        'https://xstore.8theme.com/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-1.1-min.jpg',
+    ];
+
+    const handleRenderZoomImage = (src) => {
+        return (
+            <ReactImageMagnifier
+                srcPreview={
+                    src
+                }
+                srcOriginal={
+                    src
+                }
+                width={295}
+                height={350}
+            />
+        );
+    };
+
     const handleSetMenuSelected = (id) => {
         setMenuSelected(id);
     };
@@ -55,21 +91,35 @@ export default function DetailProduct() {
             image: 'https://xstore.8theme.com/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-1.1-min.jpg',
             name: 'Test product 1',
             price: '100',
-            size: [{name: "L"}, {name: "M"}, {name: "S"}]
+            size: [{ name: 'L' }, { name: 'M' }, { name: 'S' }]
         },
         {
             image: 'https://xstore.8theme.com/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-1.1-min.jpg',
             name: 'Test product 1',
             price: '100',
-            size: [{name: "L"}, {name: "M"}, {name: "S"}]
+            size: [{ name: 'L' }, { name: 'M' }, { name: 'S' }]
         },
         {
             image: 'https://xstore.8theme.com/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-1.1-min.jpg',
             name: 'Test product 1',
             price: '100',
-            size: [{name: "L"}, {name: "M"}, {name: "S"}]
+            size: [{ name: 'L' }, { name: 'M' }, { name: 'S' }]
         }
-    ]
+    ];
+
+    const handleSelectedSize = (size) => {
+        setSizeSelected(size);
+    }
+
+    const handleClearSizeSelected = () => {
+        setSizeSelected('');
+    }
+
+    const handleSetQuantity = (type) => {
+        if(quantity < 1) return;
+        setQuantity(prev => type === INCREMENT ? (prev += 1) : (quantity === 1 ? 1 : prev -= 1));
+    };
+
     return (
         <div>
             <MyHeader />
@@ -83,22 +133,7 @@ export default function DetailProduct() {
                     </div>
                     <div className={contentSection}>
                         <div className={imageBox}>
-                            <img
-                                src='https://xstore.8theme.com/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-1.1-min.jpg'
-                                alt=''
-                            />
-                            <img
-                                src='https://xstore.8theme.com/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-1.1-min.jpg'
-                                alt=''
-                            />
-                            <img
-                                src='https://xstore.8theme.com/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-1.1-min.jpg'
-                                alt=''
-                            />
-                            <img
-                                src='https://xstore.8theme.com/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-1.1-min.jpg'
-                                alt=''
-                            />
+                            {dateImageDetail.map((item) => handleRenderZoomImage(item))}
                         </div>
                         <div className={infoBox}>
                             <h1>Title product</h1>
@@ -107,21 +142,35 @@ export default function DetailProduct() {
                                 Amet, elit tellus, nisi odio velit ut. Euismod
                                 sit arcu, quisque arcu purus orci leo.
                             </p>
-                            <p className={titleSize}>Size</p>
+                            <p className={titleSize}>Size {sizeSelected}</p>
                             <div className={boxSize}>
-                                <div className={size}>S</div>
-                                <div className={size}>M</div>
-                                <div className={size}>L</div>
+                                {tempDateSize.map((item, index) => {
+                                    return (
+                                        <div
+                                            className={cls(size, {
+                                                [active]: item.name === sizeSelected
+                                            })}
+                                            key={index}
+                                            onClick={() => handleSelectedSize(item.name)}
+                                        >
+                                            {item.name}
+                                        </div>
+                                    );
+                                })}
                             </div>
+
+                            {sizeSelected && (
+                                <p onClick={handleClearSizeSelected} className={clear}>Clear</p>
+                            )}
 
                             <div className={functionInfo}>
                                 <div className={incrementAmount}>
-                                    <div>-</div>
-                                    <div>1</div>
-                                    <div>+</div>
+                                    <div onClick={() => handleSetQuantity(DECREMENT)}>-</div>
+                                    <div>{quantity}</div>
+                                    <div onClick={() => handleSetQuantity(INCREMENT)}>+</div>
                                 </div>
                                 <div className={boxBtn}>
-                                    <Button content={'Add to cart'} />
+                                    <Button content={'Add to cart'} customClassname={!sizeSelected && activeDisabledBtn} />
                                 </div>
                             </div>
 
@@ -132,7 +181,7 @@ export default function DetailProduct() {
                             </div>
 
                             <div>
-                                <Button content={'BUY NOW'} />
+                                <Button content={'BUY NOW'} customClassname={!sizeSelected && activeDisabledBtn} />
                             </div>
 
                             <div className={addFunc}>
@@ -176,7 +225,11 @@ export default function DetailProduct() {
                     </div>
                     <div>
                         <h2>Related products</h2>
-                        <SliderCommon data={tempDateSlider} isProductItem showItem={4} />
+                        <SliderCommon
+                            data={tempDateSlider}
+                            isProductItem
+                            showItem={4}
+                        />
                     </div>
                 </MainLayout>
             </div>
