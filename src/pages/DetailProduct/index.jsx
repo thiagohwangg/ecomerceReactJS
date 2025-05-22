@@ -1,6 +1,6 @@
 import MyHeader from '@components/Header/Header';
 import MainLayout from '@components/Layout/Layout';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 import Button from '@components/Button/Button';
 import { CiHeart } from 'react-icons/ci';
@@ -13,6 +13,8 @@ import MyFooter from '@components/Footer/Footer';
 import SliderCommon from '@components/SliderCommon/SliderCommon';
 import ReactImageMagnifier from 'simple-image-magnifier/react';
 import cls from 'classnames'
+import { getDetailProduct, getRelatedProduct } from '@/apis/productService';
+import { useParams } from 'react-router-dom';
 const tempDateSize = [
     {name: 'L', amount: '1000'},
     {name: 'M', amount: '1000'},
@@ -46,6 +48,12 @@ export default function DetailProduct() {
     const [menuSelected, setMenuSelected] = useState(1);
     const [sizeSelected, setSizeSelected] = useState('');
     const [quantity, setQuantity] = useState(1);
+    const [data, setData] = useState();
+    const [isLoading, setIsLoading] = useState(false);
+    const [relatedData, setRelatedData] = useState([]);
+    
+
+    const param = useParams();
 
     const dataAccordionMenu = [
         {
@@ -86,26 +94,6 @@ export default function DetailProduct() {
         setMenuSelected(id);
     };
 
-    const tempDateSlider = [
-        {
-            image: 'https://xstore.8theme.com/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-1.1-min.jpg',
-            name: 'Test product 1',
-            price: '100',
-            size: [{ name: 'L' }, { name: 'M' }, { name: 'S' }]
-        },
-        {
-            image: 'https://xstore.8theme.com/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-1.1-min.jpg',
-            name: 'Test product 1',
-            price: '100',
-            size: [{ name: 'L' }, { name: 'M' }, { name: 'S' }]
-        },
-        {
-            image: 'https://xstore.8theme.com/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-1.1-min.jpg',
-            name: 'Test product 1',
-            price: '100',
-            size: [{ name: 'L' }, { name: 'M' }, { name: 'S' }]
-        }
-    ];
 
     const handleSelectedSize = (size) => {
         setSizeSelected(size);
@@ -119,6 +107,37 @@ export default function DetailProduct() {
         if(quantity < 1) return;
         setQuantity(prev => type === INCREMENT ? (prev += 1) : (quantity === 1 ? 1 : prev -= 1));
     };
+
+    const fetchDataDetail = async (id) => {
+        setIsLoading(true);
+        try {
+           const data = await getDetailProduct(id)
+           setData(data)
+           setIsLoading(false)
+        } catch (error) {
+            console.log("error: ", error);
+            setIsLoading(false);
+        }
+    }
+
+    const fetchDataRelatedProduct = async(id) => {
+        setIsLoading(true);
+        try {
+            const data = await getRelatedProduct(id)
+            setRelatedData(data)
+            setIsLoading(false)
+        } catch (error) {
+            console.log("error: ", error);
+            setIsLoading(false);
+        }
+    }
+
+    useEffect(() => {
+        if(param.id) {
+            fetchDataDetail(param.id)
+            fetchDataRelatedProduct(param.id)
+        }
+    }, [param])
 
     return (
         <div>
@@ -226,7 +245,7 @@ export default function DetailProduct() {
                     <div>
                         <h2>Related products</h2>
                         <SliderCommon
-                            data={tempDateSlider}
+                            data={relatedData}
                             isProductItem
                             showItem={4}
                         />

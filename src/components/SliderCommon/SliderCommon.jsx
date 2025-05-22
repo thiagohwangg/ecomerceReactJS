@@ -6,7 +6,11 @@ import { MdArrowBackIosNew } from 'react-icons/md';
 import { MdArrowForwardIos } from 'react-icons/md';
 import './styles.css';
 import ProductItem from '@components/ProductItem/ProductItem';
-export default function SliderCommon({ data, isProductItem = false, showItem = 1 }) {
+export default function SliderCommon({
+    data,
+    isProductItem = false,
+    showItem = 1
+}) {
     var settings = {
         dots: false,
         infinite: true,
@@ -18,15 +22,27 @@ export default function SliderCommon({ data, isProductItem = false, showItem = 1
     };
     return (
         <Slider {...settings}>
-            {data.map((item, index) => (
-                <>
-                    {isProductItem ? (
-                        <ProductItem src={item.image} prevSrc={item.image} name={item.name} price={item.price} details={item} isHomePage={false} slideItem />
-                    ) : (
-                        <img src={item} alt='' key={index} />
-                    )}
-                </>
-            ))}
+            {data.map((item, index) => {
+                const src = !item.image ? item.images[0] : item.image;
+
+                return (
+                    <>
+                        {isProductItem ? (
+                            <ProductItem
+                                src={src}
+                                prevSrc={item.images[1]}
+                                name={item.name}
+                                price={item.price}
+                                details={item}
+                                isHomePage={false}
+                                slideItem
+                            />
+                        ) : (
+                            <img src={item} alt='' key={index} />
+                        )}
+                    </>
+                );
+            })}
         </Slider>
     );
 }
