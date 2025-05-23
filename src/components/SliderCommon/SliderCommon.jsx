@@ -23,14 +23,14 @@ export default function SliderCommon({
     return (
         <Slider {...settings}>
             {data.map((item, index) => {
-                const src = !item.image ? item.images[0] : item.image;
+                const src = !item.image ? item?.images[0] : item.image;
 
                 return (
                     <>
                         {isProductItem ? (
                             <ProductItem
                                 src={src}
-                                prevSrc={item.images[1]}
+                                prevSrc={src}
                                 name={item.name}
                                 price={item.price}
                                 details={item}

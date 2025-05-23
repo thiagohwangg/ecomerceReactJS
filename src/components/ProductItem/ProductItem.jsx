@@ -6,13 +6,13 @@ import { OurShopContext } from '@/contexts/OurShopProvider';
 import Cookies from 'js-cookie';
 import { SideBarContext } from '@/contexts/SideBarProvider';
 import { ToastContext } from '@/contexts/ToastProvider';
-import { addProductToCart } from '@/apis/cartService';
 import LoadingTextCommon from '@components/LoadingTextCommon/LoadingTextCommon';
 import { LiaShoppingBagSolid } from "react-icons/lia";
 import { CiHeart } from "react-icons/ci";
 import { LiaEyeSolid } from "react-icons/lia";
 import { TfiReload } from 'react-icons/tfi';
 import { useNavigate } from 'react-router-dom';
+import { handleAddProductToCartCommon } from '@/utils/helper';
 export default function ProductItem({
     src,
     prevSrc,
@@ -58,37 +58,7 @@ export default function ProductItem({
     }
 
     const handleAddToCart = () => {
-        if(!userId) {
-            setIsOpen(true);
-            setType('login');
-            toast.warning('Please login to add product to cart');
-            return;
-        }
-
-        if(!sizeChoose) {
-            toast.warning('Please choose size');
-            return;
-        }
-
-        const data = {
-            userId,
-            productId: details._id,
-            quantity: 1,
-            size: sizeChoose,
-        }
-
-        setIsLoading(true);
-
-        addProductToCart(data).then((res) => {
-            toast.success('Add product to cart successfully');
-            setIsOpen(true);
-            setType('cart');
-            setIsLoading(false);
-            handleGetListProductCart(userId, 'cart');
-        }).catch((err) => {
-            toast.error('Add product to cart failed');
-            setIsLoading(false);
-        });
+        handleAddProductToCartCommon(userId, setIsOpen, setType, toast, sizeChoose, details._id, 1, setIsLoading, handleGetListProductCart);
     }
 
     const handleShowDetailProductSideBar = () => {

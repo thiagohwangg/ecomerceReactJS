@@ -41,12 +41,12 @@
                 color: $four_color;
             }
 
-            .price {
+            .priceCl {
                 font-size: 20px;
                 color: $secondary_color;
             }
 
-            .description {
+            .descriptionCl {
                 color: $third_color;
                 font-weight: 400;
             }
@@ -283,4 +283,25 @@
         background-color: $primary_color;
         color: $white_color;
     }
+}
+
+.emptyData {
+    height: 977px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    p {
+        font-size: 24px
+    };
+}
+
+.loading {
+    height: 977px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f7f7f7;
 }
