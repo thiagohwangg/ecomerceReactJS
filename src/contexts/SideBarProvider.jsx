@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { getCart } from "@/apis/cartService";
 import Cookies from "js-cookie";
+import { useLocation, useParams } from "react-router-dom";
 
 
 export const SideBarContext = createContext();
@@ -13,7 +14,7 @@ export const SideBarProvider = ({ children }) => {
     const [detailProduct, setDetailProduct] = useState(null);
 
     const userId = Cookies.get('userId');
-    const handleGetListProductCart = (userId, type) => {
+;    const handleGetListProductCart = (userId, type) => {
         if(userId && type === 'cart') {
             setIsLoading(true);
             getCart(userId).then(res => {
@@ -27,10 +28,6 @@ export const SideBarProvider = ({ children }) => {
         }
     };
 
-    useEffect(() => {
-        handleGetListProductCart(userId, 'cart');
-    }, []);
-
     const values = {
         isOpen,
         setIsOpen,
@@ -42,7 +39,8 @@ export const SideBarProvider = ({ children }) => {
         setIsLoading,
         userId,
         detailProduct,
-        setDetailProduct
+        setDetailProduct,
+        setListProductCart
     };
     return <SideBarContext.Provider value={values}>{children}</SideBarContext.Provider>;
 };

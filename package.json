@@ -26,6 +26,7 @@
     "react-toastify": "^10.0.6",
     "simple-image-magnifier": "^1.0.10",
     "slick-carousel": "^1.8.1",
+    "swiper": "^11.2.6",
     "using": "^1.0.0-alpha-1",
     "yup": "^1.4.0"
   },

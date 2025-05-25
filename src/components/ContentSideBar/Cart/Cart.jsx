@@ -41,7 +41,7 @@ export default function Cart() {
             />
             {listProductCart.length > 0 ? (
                 <div className={containerListItem}>
-                    <div>
+                    <div style={{height: 'calc(100vh - 250px)', overflowY: 'auto'}}>
                         {isLoading ? (
                             <LoadingTextCommon />
                         ) : (

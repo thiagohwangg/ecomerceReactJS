@@ -10,6 +10,7 @@ import { PiShoppingCart } from 'react-icons/pi';
 import useScrollHandling from '@/hooks/useScrollHandling';
 import classNames from 'classnames';
 import { SideBarContext } from '@/contexts/SideBarProvider';
+import { StoreContext } from '@/contexts/storeProdiver';
 export default function MyHeader() {
     const {
         containerBoxIcon,
@@ -25,12 +26,22 @@ export default function MyHeader() {
     const { scrollPosition } = useScrollHandling();
     const [fixedPosition, setFixedPosition] = useState(false);
 
-    const { isOpen, setIsOpen, setType, listProductCart } = useContext(SideBarContext);
-
+    const { isOpen, setIsOpen, setType, listProductCart, userId, handleGetListProductCart } = useContext(SideBarContext);
+    const {userInfo} = useContext(StoreContext);
     const handleOpenSideBar = (type) => {
         setType(type);
         setIsOpen(true);
     };
+    
+    const handleOpenCartSideBar = () => {
+        handleGetListProductCart(userId, 'cart');
+        handleOpenSideBar('cart')
+    }
+
+    const totalItemCart = listProductCart.length ? listProductCart.reduce((acc, item) => {
+        return acc + item.quantity;
+    }, 0) : 0;
+
     useEffect(() => {
         setFixedPosition(scrollPosition > 80);
     }, [scrollPosition]);
@@ -92,11 +103,11 @@ export default function MyHeader() {
                         />
                         <div className={boxCart}>
                             <PiShoppingCart
-                                onClick={() => handleOpenSideBar('cart')}
+                                onClick={() => handleOpenCartSideBar()}
                                 style={{ fontSize: '25px' }}
                             />
 
-                            <div className={quantity}>{listProductCart.length}</div>
+                            <div className={quantity}>{totalItemCart || userInfo?.amountCart || 0}</div>
                         </div>
                     </div>
                 </div>

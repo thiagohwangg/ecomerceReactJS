@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styles from '../../styles.module.scss';
 import Stepper from '@/pages/Cart/components/steps/Stepper';
+import { StepperContext } from '@/contexts/SteperProvider';
 
 export default function Steps() {
     const { containerSteps, steps, line,textNoti } = styles;
-
+    const { currentStep } = useContext(StepperContext);
     const dataSteps = [
         { number: 1, content: 'Shopping Cart' },
         { number: 2, content: 'Checkout' },
@@ -20,7 +21,7 @@ export default function Steps() {
                                 key={index}
                                 number={step.number}
                                 content={step.content}
-                                isDisabled={index !== 0}
+                                isDisabled={index >= currentStep}
                             />
                             {
                                 index !== dataSteps.length - 1 && (
